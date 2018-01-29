@@ -1411,7 +1411,7 @@ function crypto_hash(out, m, n) {
   for (i = 0; i < n; ++i) {
     input[i] = m[i];
   }
-  var hash = blake2b.blake2b(m);
+  var hash = blake2b.blake2b(input);
   for (i = 0; i < crypto_hash_BYTES; ++i) {
     out[i] = hash[i];
   }
