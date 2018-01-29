@@ -1,7 +1,7 @@
 {
-  "name": "tweetnacl",
+  "name": "tweetnacl-blake2b",
   "version": "1.0.0",
-  "description": "Port of TweetNaCl cryptographic library to JavaScript",
+  "description": "Port of TweetNaCl (ed25519) but using blake2b instead of sha512 as hash algorithm",
   "main": "nacl-fast.js",
   "types": "nacl.d.ts",
   "directories": {
@@ -26,6 +26,8 @@
     "cryptography",
     "curve25519",
     "ed25519",
+    "raiblocks",
+    "blake2b",
     "encrypt",
     "hash",
     "key",
@@ -35,12 +37,12 @@
     "salsa20",
     "signatures"
   ],
-  "author": "TweetNaCl-js contributors",
+  "author": "David Bengoa and TweetNaCl.js contributors",
   "license": "Unlicense",
   "bugs": {
-    "url": "https://github.com/dchest/tweetnacl-js/issues"
+    "url": "https://github.com/dvdbng/tweetnacl-blake2b-js/issues"
   },
-  "homepage": "https://tweetnacl.js.org",
+  "homepage": "https://github.com/dvdbng/tweetnacl-blake2b-js",
   "devDependencies": {
     "browserify": "^13.1.1",
     "electron": "^1.4.12",

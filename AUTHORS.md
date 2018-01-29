@@ -1,3 +1,7 @@
+List of TweetNaCl-blake2b.js authors
+============================
+* David Bengoa (@dvdbng)
+
 List of TweetNaCl.js authors
 ============================
 

@@ -1,13 +1,7 @@
-TweetNaCl.js
+TweetNaCl-blake2b.js
 ============
 
-Port of [TweetNaCl](http://tweetnacl.cr.yp.to) / [NaCl](http://nacl.cr.yp.to/)
-to JavaScript for modern browsers and Node.js. Public domain.
-
-[![Build Status](https://travis-ci.org/dchest/tweetnacl-js.svg?branch=master)
-](https://travis-ci.org/dchest/tweetnacl-js)
-
-Demo: <https://dchest.github.io/tweetnacl-js/>
+Fork of TweetNaCl (ed25519), but using blake2b instead of sha512 (like raiblocks)
 
 Documentation
 =============
@@ -33,7 +27,8 @@ Documentation
 Overview
 --------
 
-The primary goal of this project is to produce a translation of TweetNaCl to
+The primary goal of this project is to produce a translation of TweetNaCl using
+the blake2b hash algorithm instead of sha512 to
 JavaScript which is as close as possible to the original C implementation, plus
 a thin layer of idiomatic high-level API on top of it.
 
@@ -49,7 +44,7 @@ There are two versions, you can use either of them:
 Audits
 ------
 
-TweetNaCl.js has been audited by [Cure53](https://cure53.de/) in January-February
+TweetNaCl.js (parent project) has been audited by [Cure53](https://cure53.de/) in January-February
 2017 (audit was sponsored by [Deletype](https://deletype.com)):
 
 > The overall outcome of this audit signals a particularly positive assessment
@@ -73,17 +68,17 @@ TweetNaCl.js has been audited by [Cure53](https://cure53.de/) in January-Februar
 Installation
 ------------
 
-You can install TweetNaCl.js via a package manager:
+You can install TweetNaCl-blake2b.js via a package manager:
 
 [Yarn](https://yarnpkg.com/):
 
-    $ yarn add tweetnacl
+    $ yarn add tweetnacl-blake2b
 
 [NPM](https://www.npmjs.org/):
 
-    $ npm install tweetnacl
+    $ npm install tweetnacl-blake2b
 
-or [download source code](https://github.com/dchest/tweetnacl-js/releases).
+or [download source code](https://github.com/dvdbng/tweetnacl-blake2b-js/releases).
 
 
 Usage
@@ -95,7 +90,7 @@ encode or decode strings, use functions from
 packages.
 
 In Node.js v4 and later `Buffer` objects are backed by `Uint8Array`s, so you
-can freely pass them to TweetNaCl.js functions as arguments. The returned
+can freely pass them to TweetNaCl-blake2b.js functions as arguments. The returned
 objects are still `Uint8Array`s, so if you need `Buffer`s, you'll have to
 convert them manually; make sure to convert using copying: `new Buffer(array)`,
 instead of sharing: `new Buffer(array.buffer)`, because some functions return
@@ -310,7 +305,7 @@ cryptographic quality.
 
 **Implementation note**
 
-TweetNaCl.js uses the following methods to generate random bytes,
+TweetNaCl-blake2b.js uses the following methods to generate random bytes,
 depending on the platform it runs on:
 
 * `window.crypto.getRandomValues` (WebCrypto standard)
@@ -329,7 +324,7 @@ Other functions are deterministic and will continue working.
 If a platform you are targeting doesn't implement secure random number
 generator, but you somehow have a cryptographically-strong source of entropy
 (not `Math.random`!), and you know what you are doing, you can plug it into
-TweetNaCl.js like this:
+TweetNaCl-blake2b.js like this:
 
     nacl.setPRNG(function(x, n) {
       // ... copy n random bytes into x ...
@@ -353,7 +348,7 @@ different lengths, or their contents differ.
 System requirements
 -------------------
 
-TweetNaCl.js supports modern browsers that have a cryptographically secure
+TweetNaCl-blake2b.js supports modern browsers that have a cryptographically secure
 pseudorandom number generator and typed arrays, including the latest versions
 of:
 
@@ -381,103 +376,7 @@ To build minified versions:
 Tests use minified version, so make sure to rebuild it every time you change
 `nacl.js` or `nacl-fast.js`.
 
-### Testing
-
-To run tests in Node.js:
-
-    $ npm run test-node
-
-By default all tests described here work on `nacl.min.js`. To test other
-versions, set environment variable `NACL_SRC` to the file name you want to test.
-For example, the following command will test fast minified version:
-
-    $ NACL_SRC=nacl-fast.min.js npm run test-node
-
-To run full suite of tests in Node.js, including comparing outputs of
-JavaScript port to outputs of the original C version:
-
-    $ npm run test-node-all
-
-To prepare tests for browsers:
-
-    $ npm run build-test-browser
-
-and then open `test/browser/test.html` (or `test/browser/test-fast.html`) to
-run them.
-
-To run headless browser tests with `tape-run` (powered by Electron):
-
-    $ npm run test-browser
-
-(If you get `Error: spawn ENOENT`, install *xvfb*: `sudo apt-get install xvfb`.)
-
-To run tests in both Node and Electron:
-
-    $ npm test
-
-### Benchmarking
-
-To run benchmarks in Node.js:
-
-    $ npm run bench
-    $ NACL_SRC=nacl-fast.min.js npm run bench
-
-To run benchmarks in a browser, open `test/benchmark/bench.html` (or
-`test/benchmark/bench-fast.html`).
-
-
-Benchmarks
-----------
-
-For reference, here are benchmarks from MacBook Pro (Retina, 13-inch, Mid 2014)
-laptop with 2.6 GHz Intel Core i5 CPU (Intel) in Chrome 53/OS X and Xiaomi Redmi
-Note 3 smartphone with 1.8 GHz Qualcomm Snapdragon 650 64-bit CPU (ARM) in
-Chrome 52/Android:
-
-|               | nacl.js Intel | nacl-fast.js Intel  |   nacl.js ARM | nacl-fast.js ARM  |
-| ------------- |:-------------:|:-------------------:|:-------------:|:-----------------:|
-| salsa20       | 1.3 MB/s      | 128 MB/s            |  0.4 MB/s     |  43 MB/s          |
-| poly1305      | 13 MB/s       | 171 MB/s            |  4 MB/s       |  52 MB/s          |
-| hash          | 4 MB/s        | 34 MB/s             |  0.9 MB/s     |  12 MB/s          |
-| secretbox 1K  | 1113 op/s     | 57583 op/s          |  334 op/s     |  14227 op/s       |
-| box 1K        | 145 op/s      | 718 op/s            |  37 op/s      |  368 op/s         |
-| scalarMult    | 171 op/s      | 733 op/s            |  56 op/s      |  380 op/s         |
-| sign          | 77  op/s      | 200 op/s            |  20 op/s      |  61 op/s          |
-| sign.open     | 39  op/s      | 102  op/s           |  11 op/s      |  31 op/s          |
-
-(You can run benchmarks on your devices by clicking on the links at the bottom
-of the [home page](https://tweetnacl.js.org)).
-
-In short, with *nacl-fast.js* and 1024-byte messages you can expect to encrypt and
-authenticate more than 57000 messages per second on a typical laptop or more than
-14000 messages per second on a $170 smartphone, sign about 200 and verify 100
-messages per second on a laptop or 60 and 30 messages per second on a smartphone,
-per CPU core (with Web Workers you can do these operations in parallel),
-which is good enough for most applications.
-
-
 Contributors
 ------------
 
 See AUTHORS.md file.
-
-
-Third-party libraries based on TweetNaCl.js
--------------------------------------------
-
-* [forward-secrecy](https://github.com/alax/forward-secrecy) — Axolotl ratchet implementation
-* [nacl-stream](https://github.com/dchest/nacl-stream-js) - streaming encryption
-* [tweetnacl-auth-js](https://github.com/dchest/tweetnacl-auth-js) — implementation of [`crypto_auth`](http://nacl.cr.yp.to/auth.html)
-* [tweetnacl-sealed-box](https://github.com/whs/tweetnacl-sealed-box) — implementation of [`sealed boxes`](https://download.libsodium.org/doc/public-key_cryptography/sealed_boxes.html)
-* [chloride](https://github.com/dominictarr/chloride) - unified API for various NaCl modules
-
-
-Who uses it
------------
-
-Some notable users of TweetNaCl.js:
-
-* [MEGA](https://github.com/meganz/webclient)
-* [Peerio](https://www.peerio.com/)
-* [Stellar](https://www.stellar.org/)
-* [miniLock](http://minilock.io/)
