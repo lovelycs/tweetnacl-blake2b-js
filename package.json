@@ -1,6 +1,6 @@
 {
   "name": "tweetnacl-blake2b",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Port of TweetNaCl (ed25519) but using blake2b instead of sha512 as hash algorithm",
   "main": "nacl-fast.js",
   "types": "nacl.d.ts",
