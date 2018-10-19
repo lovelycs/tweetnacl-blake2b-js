@@ -1,5 +1,5 @@
 {
-  "name": "@lovelycs/tweetnacl-blake2b",
+  "name": "@sisi/tweetnacl-blake2b",
   "version": "1.0.0",
   "description": "Forked of dvdbng/tweetnacl-blake2b-js. Using 'var' instead of 'const'",
   "main": "nacl-fast.js",
