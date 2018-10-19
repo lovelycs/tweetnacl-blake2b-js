@@ -1,7 +1,7 @@
 {
-  "name": "tweetnacl-blake2b",
-  "version": "1.0.1",
-  "description": "Port of TweetNaCl (ed25519) but using blake2b instead of sha512 as hash algorithm",
+  "name": "@lovelycs/tweetnacl-blake2b",
+  "version": "1.0.0",
+  "description": "Forked of dvdbng/tweetnacl-blake2b-js. Using 'var' instead of 'const'",
   "main": "nacl-fast.js",
   "types": "nacl.d.ts",
   "directories": {
@@ -16,10 +16,6 @@
     "test": "npm run test-node-all",
     "bench": "node test/benchmark/bench.js",
     "lint": "eslint nacl.js nacl-fast.js test/*.js test/benchmark/*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dchest/tweetnacl-js.git"
   },
   "keywords": [
     "crypto",
@@ -37,12 +33,7 @@
     "salsa20",
     "signatures"
   ],
-  "author": "David Bengoa and TweetNaCl.js contributors",
   "license": "Unlicense",
-  "bugs": {
-    "url": "https://github.com/dvdbng/tweetnacl-blake2b-js/issues"
-  },
-  "homepage": "https://github.com/dvdbng/tweetnacl-blake2b-js",
   "devDependencies": {
     "browserify": "^13.1.1",
     "electron": "^1.4.12",

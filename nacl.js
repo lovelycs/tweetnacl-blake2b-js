@@ -1,4 +1,4 @@
-const blake2b = require('blakejs/blake2b');
+var blake2b = require('blakejs/blake2b');
 
 (function(nacl) {
 'use strict';
